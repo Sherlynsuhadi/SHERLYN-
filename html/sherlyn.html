@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form BMI</title>
+</head>
+<body>
+    <h2>Formulir Penghitungan BMI</h2>
+    <form id="bmiForm" onsubmit="calculateBMI(event)">
+        <label for="weight">Berat Badan (kg):</label><br>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="height">Tinggi Badan (cm):</label><br>
+        <input type="number" id="height" name="height" required><br><br>
+
+        <label for="gender">Jenis Kelamin:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="male">Laki-laki</option>
+            <option value="female">Wanita</option>
+        </select><br><br>
+
+        <label for="age">Usia:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <input type="submit" value="Hitung BMI">
+    </form>
+
+    <h3>Hasil:</h3>
+    <p id="result"></p>
+
+    <script>
+        function calculateBMI(event) {
+            event.preventDefault();  // Mencegah pengiriman form secara default
+
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;  // Convert cm to meters
+            const gender = document.getElementById('gender').value;
+
+            const bmi = (weight / (height * height)).toFixed(2);  // Hitung BMI dan batasi desimal
+
+            let resultText = `BMI Anda adalah ${bmi}. `;
+
+            // Menambahkan interpretasi berdasarkan jenis kelamin
+            if (gender === "male") {
+                if (bmi < 18.5) {
+                    resultText += "Anda termasuk dalam kategori underweight.";
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    resultText += "Anda memiliki berat badan normal.";
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    resultText += "Anda termasuk dalam kategori overweight.";
+                } else {
+                    resultText += "Anda termasuk dalam kategori obesitas.";
+                }
+            } else if (gender === "female") {
+                if (bmi < 18.5) {
+                    resultText += "Anda termasuk dalam kategori underweight.";
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    resultText += "Anda memiliki berat badan normal.";
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    resultText += "Anda termasuk dalam kategori overweight.";
+                } else {
+                    resultText += "Anda termasuk dalam kategori obesitas.";
+                }
+            }
+
+            document.getElementById('result').textContent = resultText;
+        }
+    </script>
+</body>
+</html>
